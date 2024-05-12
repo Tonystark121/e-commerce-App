@@ -11,6 +11,8 @@ import UserDashboard from "./pages/user/userDashboard";
 import AdminDashboard from "./pages/admin/adminDashboard";
 import { Toaster } from "react-hot-toast";
 import { useLocation } from "react-router-dom";
+import AdminOnlyRoutes from "./protectedRoutes/adminOnlyRoutes";
+import UserOnlyRoutes from "./protectedRoutes/userOnlyRoutes";
 
 function App() {
   const ScrollToTop = () => {
@@ -35,8 +37,22 @@ function App() {
         <Route path="/productinfo" element={<ProductInfo />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/all-products" element={<AllProduct />} />
-        <Route path="/user-dashboard" element={<UserDashboard />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route
+          path="/user-dashboard"
+          element={
+            <UserOnlyRoutes>
+              <UserDashboard />
+            </UserOnlyRoutes>
+          }
+        />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <AdminOnlyRoutes>
+              <AdminDashboard />
+            </AdminOnlyRoutes>
+          }
+        />
       </Routes>
       <Toaster />
     </BrowserRouter>

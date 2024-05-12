@@ -34,7 +34,7 @@ const Login = () => {
             const data = onSnapshot(q, (querySnapShot) => {
               let user;
               querySnapShot.forEach((doc) => {
-                 user = doc.data()
+                user = doc.data();
               });
               localStorage.setItem("users", JSON.stringify(user));
               setUserData({
@@ -43,13 +43,18 @@ const Login = () => {
               });
               toast.success("Logged in SuccessFull");
               setIsLoading(false);
-              navigate("/");
+              if (user.role === "user") {
+                navigate("/user-dashboard");
+              } else {
+                navigate("/admin-dashboard");
+              }
             });
 
             return () => data;
           } catch (error) {
             console.log(error);
             throw new Error("Something went wrong");
+            toast.error("Login Failed");
           }
         })
         .catch((err) => {

@@ -5,13 +5,14 @@ import ColorTheme from "../colorTheme/theme";
 
 const nav = () => {
   // const user = JSON.parse()
-  const user = JSON.parse(localStorage.getItem('users'))
-  const navigate = useNavigate()
+  const user = JSON.parse(localStorage.getItem("users"));
+  const navigate = useNavigate();
+  console.log(user)
   const Navlinks = () => {
     const logout = () => {
-      localStorage.clear('users')
-      navigate('/login')
-    }
+      localStorage.clear("users");
+      navigate("/login");
+    };
     return (
       <ul className="flex space-x-3 text-white font-medium text-md px-5 ">
         {/* Home */}
@@ -34,7 +35,7 @@ const nav = () => {
         )} */}
 
         {/* Signin */}
-        {user===null ? (
+        {user === null ? (
           <li>
             <Link to={"/login"}>Login</Link>
           </li>
@@ -98,7 +99,7 @@ const nav = () => {
         <SearchBar />
 
         {/* theme */}
-        <ColorTheme/>
+        <ColorTheme />
       </div>
     </nav>
   );
