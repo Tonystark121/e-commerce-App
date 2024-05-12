@@ -1,10 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../searchbar/search";
 import ColorTheme from "../colorTheme/theme";
 
 const nav = () => {
+  // const user = JSON.parse()
+  const user = JSON.parse(localStorage.getItem('users'))
+  const navigate = useNavigate()
   const Navlinks = () => {
+    const logout = () => {
+      localStorage.clear('users')
+      navigate('/login')
+    }
     return (
       <ul className="flex space-x-3 text-white font-medium text-md px-5 ">
         {/* Home */}
@@ -14,11 +21,7 @@ const nav = () => {
 
         {/* All Product */}
         <li>
-          <Link to={"/allproduct"}>All Product</Link>
-        </li>
-
-        <li>
-          <Link to={"/signup"}>Signup</Link>
+          <Link to={"/all-products"}>All Product</Link>
         </li>
 
         {/* Signup */}
@@ -30,35 +33,35 @@ const nav = () => {
           ""
         )} */}
 
-        {/* Signup */}
-        {/* {!user ? (
+        {/* Signin */}
+        {user===null ? (
           <li>
             <Link to={"/login"}>Login</Link>
           </li>
         ) : (
           ""
-        )} */}
+        )}
 
         {/* User */}
-        {/* {user?.role === "user" && (
+        {user?.role === "user" && (
           <li>
             <Link to={"/user-dashboard"}>User</Link>
           </li>
-        )} */}
+        )}
 
         {/* Admin */}
-        {/* {user?.role === "admin" && (
+        {user?.role === "admin" && (
           <li>
             <Link to={"/admin-dashboard"}>Admin</Link>
           </li>
-        )} */}
+        )}
 
         {/* logout */}
-        {/* {user && (
+        {user && (
           <li className=" cursor-pointer" onClick={logout}>
-            logout
+            Logout
           </li>
-        )} */}
+        )}
 
         {/* Cart */}
         <li>
