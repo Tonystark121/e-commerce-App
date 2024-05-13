@@ -13,6 +13,8 @@ import { Toaster } from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 import AdminOnlyRoutes from "./protectedRoutes/adminOnlyRoutes";
 import UserOnlyRoutes from "./protectedRoutes/userOnlyRoutes";
+import AddProductPage from "./pages/admin/addProduct";
+import UpdateProductPage from "./pages/admin/updateProduct";
 
 function App() {
   const ScrollToTop = () => {
@@ -37,6 +39,9 @@ function App() {
         <Route path="/productinfo" element={<ProductInfo />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/all-products" element={<AllProduct />} />
+        <Route path="/addproduct" element={<AddProductPage />} />
+        <Route path="/updateproduct/:id" element={<UpdateProductPage />} />
+
         <Route
           path="/user-dashboard"
           element={

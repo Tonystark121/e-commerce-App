@@ -1,7 +1,22 @@
-import React from 'react'
-import Layout from '../../components/layout.jsx/layout';
-
+import React, { useContext, useEffect } from "react";
+import Layout from "../../components/layout.jsx/layout";
+import ProductDetail from "../../components/admin/productDetail";
+import OrderDetail from "../../components/admin/productDetail";
+// import ProductDetail from "../../components/admin/productDetail";
+import AppContext from "antd/es/app/context";
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 const AdminDashboard = () => {
+  const user = JSON.parse(localStorage.getItem("users"));
+
+  const {
+    allOrders,
+    getAllProduct,
+    getAllUser,
+    getAllProducts,
+    getAllOrders,
+    getAllUserFunction,
+  } = useContext(AppContext);
+
   return (
     <Layout>
       <div>
@@ -29,21 +44,20 @@ const AdminDashboard = () => {
               {/* text  */}
               <div className="">
                 <h1 className=" text-center text-lg text-pink-500">
-                  <span className=" font-bold">Name :</span> Kamal Nayan
-                  Upadhyay
+                  <span className=" font-bold">Name :</span> {user?.name}
                 </h1>
                 <h1 className=" text-center text-lg text-pink-500">
-                  <span className=" font-bold">Email :</span> test@gmail.com
+                  <span className=" font-bold">Email :</span> {user?.email}
                 </h1>
               </div>
             </div>
           </div>
 
           {/* Bottom */}
-          <div className="">
-            <div className="flex flex-wrap -m-4 text-center justify-center">
+          <Tabs className="">
+            <TabList className="flex flex-wrap -m-4 text-center justify-center">
               {/* Total Products */}
-              <div className="p-4 md:w-1/3 sm:w-1/2 w-full cursor-pointer">
+              <Tab className="p-4 md:w-1/3 sm:w-1/2 w-full cursor-pointer">
                 <div className=" border bg-pink-50 hover:bg-pink-100 border-pink-100 px-4 py-3 rounded-xl">
                   <div className="text-pink-500 w-12 h-12 mb-3 inline-block">
                     <svg
@@ -68,14 +82,14 @@ const AdminDashboard = () => {
                     </svg>
                   </div>
                   <h2 className="title-font font-medium text-3xl text-pink-400 fonts1">
-                    10
+                    {getAllProduct?.length ? getAllProduct?.length : 10}
                   </h2>
                   <p className=" text-pink-500  font-bold">Total Products</p>
                 </div>
-              </div>
+              </Tab>
 
               {/* Total Order  */}
-              <div className="p-4 md:w-1/4 sm:w-1/2 w-full cursor-pointer">
+              <Tab className="p-4 md:w-1/4 sm:w-1/2 w-full cursor-pointer">
                 <div className=" border bg-pink-50 hover:bg-pink-100 border-pink-100 px-4 py-3 rounded-xl">
                   <div className="text-pink-500 w-12 h-12 mb-3 inline-block">
                     <svg
@@ -99,14 +113,14 @@ const AdminDashboard = () => {
                     </svg>
                   </div>
                   <h2 className="title-font font-medium text-3xl text-pink-400 fonts1">
-                    10
+                    {allOrders?.length ? allOrders?.length : 10}
                   </h2>
                   <p className=" text-pink-500  font-bold">Total Order</p>
                 </div>
-              </div>
+              </Tab>
 
               {/* Total User  */}
-              <div className="p-4 md:w-1/3 sm:w-1/2 w-full cursor-pointer">
+              <Tab className="p-4 md:w-1/3 sm:w-1/2 w-full cursor-pointer">
                 <div className=" border bg-pink-50 hover:bg-pink-100 border-pink-100 px-4 py-3 rounded-xl">
                   <div className="text-pink-500 w-12 h-12 mb-3 inline-block">
                     <svg
@@ -132,9 +146,17 @@ const AdminDashboard = () => {
                   </h2>
                   <p className=" text-pink-500  font-bold">Total Order</p>
                 </div>
-              </div>
-            </div>
-          </div>
+              </Tab>
+            </TabList>
+            <TabPanel>
+              <ProductDetail />
+            </TabPanel>
+            <TabPanel>
+              {/* <ProductDetail /> */}
+              Rajeev
+            </TabPanel>
+            <TabPanel>Rohit</TabPanel>
+          </Tabs>
         </div>
       </div>
     </Layout>

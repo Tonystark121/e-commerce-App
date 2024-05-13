@@ -7,7 +7,6 @@ const nav = () => {
   // const user = JSON.parse()
   const user = JSON.parse(localStorage.getItem("users"));
   const navigate = useNavigate();
-  console.log(user)
   const Navlinks = () => {
     const logout = () => {
       localStorage.clear("users");
