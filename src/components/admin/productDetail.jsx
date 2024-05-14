@@ -5,8 +5,13 @@ import Loader from "../loader/loader";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
-  const { getAllProduct, isLoading, setIsLoading } =
+
+  const { getAllProduct, isLoading, deleteItem} =
     useContext(AppContext);
+
+    const handleDelete = (id) => {
+       deleteItem(id)
+    }
 
   return (
     <div>
@@ -112,7 +117,7 @@ const ProductDetail = () => {
                     Edit
                   </td>
                   <td
-                    onClick={() => deleteProduct(id)}
+                    onClick={() => handleDelete(id)}
                     className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 text-red-500 cursor-pointer "
                   >
                     Delete

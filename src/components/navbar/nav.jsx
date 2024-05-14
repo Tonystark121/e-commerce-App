@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../searchbar/search";
 import ColorTheme from "../colorTheme/theme";
+import { useSelector } from "react-redux";
 
 const nav = () => {
   // const user = JSON.parse()
@@ -12,6 +13,9 @@ const nav = () => {
       localStorage.clear("users");
       navigate("/login");
     };
+
+    const {items} = useSelector(state => state.cartReducer)
+    
     return (
       <ul className="flex space-x-3 text-white font-medium text-md px-5 ">
         {/* Home */}
@@ -66,7 +70,7 @@ const nav = () => {
         {/* Cart */}
         {user?.role === 'user' &&
           <li>
-          <Link to={"/cart"}>Cart(0)</Link>
+          <Link to={"/cart"}>Cart({items.length})</Link>
         </li>}
       </ul>
     );

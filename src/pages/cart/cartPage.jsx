@@ -1,5 +1,7 @@
+import React from 'react'
 import Layout from "../../components/layout.jsx/layout";
-import { Trash } from "lucide-react";
+import { Trash } from "lucide-react"
+import { useSelector } from 'react-redux';
 
 const products = [
   {
@@ -41,6 +43,8 @@ const products = [
 ];
 
 const CartPage = () => {
+  const {items} = useSelector(state => state.cartReducer)
+  const color = ['red', 'yellow', 'green', 'gray', 'brown','orange', 'black', 'white', 'voilet','pink']
   return (
     <Layout>
       <div className="container mx-auto px-4 max-w-7xl px-2 lg:px-0">
@@ -57,12 +61,12 @@ const CartPage = () => {
                 Items in your shopping cart
               </h2>
               <ul role="list" className="divide-y divide-gray-200">
-                {products.map((product) => (
+                {items.length > 0 && items?.map((product) => (
                   <div key={product.id} className="">
                     <li className="flex py-6 sm:py-6 ">
                       <div className="flex-shrink-0">
                         <img
-                          src={product.imageSrc}
+                          src={product.image}
                           alt={product.name}
                           className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center"
                         />
@@ -74,33 +78,33 @@ const CartPage = () => {
                             <div className="flex justify-between">
                               <h3 className="text-sm">
                                 <a
-                                  href={product.href}
+                                  href='#'
                                   className="font-semibold text-black"
                                 >
-                                  {product.name}
+                                  {product.name.slice(0,20)}
                                 </a>
                               </h3>
                             </div>
                             <div className="mt-1 flex text-sm">
                               <p className="text-sm text-gray-500">
-                                {product.color}
+                                {color[Math.round(Math.random() * 10)]}
                               </p>
                               {product.size ? (
                                 <p className="ml-4 border-l border-gray-200 pl-4 text-sm text-gray-500">
-                                  {product.size}
+                                  {Math.round(Math.random() * 10)}{" "}CM
                                 </p>
                               ) : null}
                             </div>
                             <div className="mt-1 flex items-end">
                               <p className="text-xs font-medium text-gray-500 line-through">
-                                {product.originalPrice}
+                                {product.price}
                               </p>
                               <p className="text-sm font-medium text-gray-900">
-                                &nbsp;&nbsp;{product.price}
+                                &nbsp;&nbsp;{product.price * 5}
                               </p>
                               &nbsp;&nbsp;
                               <p className="text-sm font-medium text-green-500">
-                                {product.discount}
+                                {Math.round(Math.random() * 10) + 1} %
                               </p>
                             </div>
                           </div>

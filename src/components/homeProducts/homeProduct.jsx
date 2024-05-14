@@ -1,3 +1,6 @@
+import React, { useContext } from "react";
+import { AppContext } from "../../context/context";
+
 // productData
 const productData = [
   {
@@ -83,6 +86,8 @@ const productData = [
 ];
 
 const HomePageProductCard = () => {
+  const { getAllProduct, category } = useContext(AppContext);
+
   return (
     <div className="mt-10">
       {/* Heading  */}
@@ -96,37 +101,95 @@ const HomePageProductCard = () => {
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-5 mx-auto">
           <div className="flex flex-wrap -m-4">
-            {productData.map((item, index) => {
-              const { image, title, price } = item;
-              return (
-                <div key={index} className="p-4 w-full md:w-1/4">
-                  <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
-                    <img
-                      className="lg:h-80  h-96 w-full hover:scale-105"
-                      src={image}
-                      alt="blog"
-                    />
-                    <div className="p-6">
-                      <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                        myntra
-                      </h2>
-                      <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                        {title.substring(0, 25)}
-                      </h1>
-                      <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                        ₹{price}
-                      </h1>
+            {category === null ? (
+              getAllProduct?.map((item, index) => {
+                const { image, name, price } = item;
+                return (
+                  <div key={index} className="p-4 w-full md:w-1/4">
+                    <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
+                      <img
+                        className="lg:h-80  h-96 w-full hover:scale-105"
+                        src={image}
+                        alt="blog"
+                      />
+                      <div className="p-6">
+                        <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                          myntra
+                        </h2>
+                        <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
+                          {name.substring(0, 25)}
+                        </h1>
+                        <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
+                          ₹{price}
+                        </h1>
 
-                      <div className="flex justify-center ">
-                        <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold">
-                          Add To Cart
-                        </button>
+                        <div className="flex justify-center ">
+                          <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold">
+                            Add To Cart
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <>
+                {getAllProduct?.filter(
+                  (ele) => ele.category.toLowerCase() === category.toLowerCase()
+                ).length > 0 ? (
+                  getAllProduct
+                    ?.filter(
+                      (ele) =>
+                        ele.category.toLowerCase() === category.toLowerCase()
+                    )
+                    .map((item, index) => {
+                      const { image, name, price } = item;
+                      return (
+                        <div key={index} className="p-4 w-full md:w-1/4">
+                          <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
+                            <img
+                              className="lg:h-80  h-96 w-full hover:scale-105"
+                              src={image}
+                              alt="blog"
+                            />
+                            <div className="p-6">
+                              <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                                myntra
+                              </h2>
+                              <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
+                                {name.substring(0, 25)}
+                              </h1>
+                              <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
+                                ₹{price}
+                              </h1>
+
+                              <div className="flex justify-center ">
+                                <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold">
+                                  Add To Cart
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                ) : (
+                  <>
+                    <div className="container p-10 rounded">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/10437/10437090.png"
+                        alt="Logo"
+                        className="m-auto"
+                      />
+                      <h1 className="text-gray-400 text-center text-xl my-4">
+                        No Related Results Found
+                      </h1>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
           </div>
         </div>
       </section>

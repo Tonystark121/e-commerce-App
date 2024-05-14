@@ -1,5 +1,8 @@
+import React, { useContext } from "react";
+import { AppContext } from "../../context/context";
+
 // category
-const category = [
+const category1 = [
   {
     image: "https://cdn-icons-png.flaticon.com/256/4359/4359963.png",
     name: "fashion",
@@ -35,6 +38,7 @@ const category = [
 ];
 
 const Category = () => {
+  const { category, setCategory } = useContext(AppContext);
   return (
     <div>
       <div className="flex flex-col mt-5">
@@ -43,17 +47,19 @@ const Category = () => {
           {/* main 2  */}
           <div className="flex ">
             {/* category  */}
-            {category.map((item, index) => {
+            {category1.map((item, index) => {
               return (
                 <div key={index} className="px-3 lg:px-10">
                   {/* Image  */}
-                  <div className=" w-16 h-16 lg:w-24 lg:h-24 max-w-xs rounded-full  bg-pink-500 transition-all hover:bg-pink-400 cursor-pointer mb-1 ">
+                  <div
+                    className=" w-16 h-16 lg:w-24 lg:h-24 max-w-xs rounded-full  bg-pink-500 transition-all hover:bg-pink-400 cursor-pointer mb-1 "
+                    onClick={() => setCategory(item.name)}
+                  >
                     <div className="flex justify-center mb-12">
                       {/* Image tag  */}
                       <img src={item.image} alt="img" />
                     </div>
                   </div>
-
                   {/* Name Text  */}
                   <h1 className=" text-sm lg:text-lg text-center font-medium title-font first-letter:uppercase ">
                     {item.name}

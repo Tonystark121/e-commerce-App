@@ -3,13 +3,14 @@ import Layout from "../../components/layout.jsx/layout";
 import ProductDetail from "../../components/admin/productDetail";
 import OrderDetail from "../../components/admin/productDetail";
 import UserDetail from "../../components/admin/userDetails";
-import AppContext from "antd/es/app/context";
+import { AppContext } from "../../context/context";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+
+
 const AdminDashboard = () => {
   const user = JSON.parse(localStorage.getItem("users"));
-
+  
   const { allOrders, getAllProduct, getAllUser } = useContext(AppContext);
-  // console.log(getAllUser)
 
   return (
     <Layout>

@@ -42,7 +42,6 @@ const UpdateProductPage = () => {
   // navigate
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
 
   // product state
   const [product, setProduct] = useState({
@@ -87,12 +86,12 @@ const UpdateProductPage = () => {
     setIsLoading(true);
     try {
       await setDoc(doc(db, "products", id), product);
-      toast.success("Product Updated successfully");
-      await getAllProducts();
       setIsLoading(false);
+      toast.success("Product Updated successfully");
       navigate("/admin-dashboard");
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong!");
       setIsLoading(false);
     }
   };
@@ -101,7 +100,6 @@ const UpdateProductPage = () => {
     getSingleProductFunction();
   }, []);
 
-  console.log(product)
   return (
     <div>
       <div className="flex justify-center items-center h-screen">

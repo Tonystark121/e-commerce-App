@@ -3,7 +3,7 @@ import { AppContext } from '../../context/context';
 
 const UserDetail = () => {
   const { getAllUser, allOrders, getAllProduct, } = useContext(AppContext);
-  console.log(getAllUser, allOrders, getAllProduct)
+  // console.log(getAllUser, allOrders, getAllProduct)
   return (
     <div>
       <div>
