@@ -5,9 +5,10 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
-import { Children, createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { db } from "../firebase/config";
 import toast from "react-hot-toast";
+import { DiJsBadge } from "react-icons/di";
 
 export const AppContext = createContext();
 
@@ -18,17 +19,36 @@ const AppContextProvider = ({ children }) => {
   const [getAllUser, setGetAllUser] = useState([]);
 
   // get all Products
+  // const getAllProducts = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const q = query(collection(db, "products"), orderBy("time"));
+  //     const data = onSnapshot(q, (QuerySnapshot) => {
+  //       let allProduct = [];
+  //       QuerySnapshot.forEach((doc) =>
+  //         allProduct.push({ ...doc.data(), id: doc.id }),
+  //         console.log(doc.data)
+  //       );
+  //       setGetAllProduct(allProduct);
+  //       setIsLoading(false);
+  //     });
+  //     return () => data;
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const getAllProducts = async () => {
     setIsLoading(true);
     try {
       const q = query(collection(db, "products"), orderBy("time"));
-      const data = onSnapshot(q, (querySnapshot) => {
-        let allProduct = [];
-        querySnapshot.forEach((doc) =>
-          allProduct.push({ ...doc.data(), id: doc.id })
-        );
-        console.log(allProduct)
-        setGetAllProduct(allProduct)
+      const data = onSnapshot(q, (QuerySnapshot) => {
+        let productArray = [];
+        QuerySnapshot.forEach((doc) => {
+          productArray.push({ ...doc.data(), id: doc.id });
+        });
+        setGetAllProduct(productArray);
         setIsLoading(false);
       });
       return () => data;
@@ -38,19 +58,17 @@ const AppContextProvider = ({ children }) => {
     }
   };
 
-  console.log(getAllProduct)
-
   // get all Orders
-  const getAllOrders = () => {
+  const getAllOrders = async () => {
     setIsLoading(false);
     try {
       const q = query(collection(db, "Products"), orderBy("time"));
-      const data = onSnapshot(q, (querySnapshot) => {
+      const data = onSnapshot(q, (QuerySnapshot) => {
         let allOrders = [];
-        querySnapshot.forEach((doc) =>
+        QuerySnapshot.forEach((doc) =>
           allOrders.push({ ...doc.data(), id: doc.id })
         );
-        setGetAllProduct(allOrders);
+        getAllOrders(allOrders);
         setIsLoading(false);
       });
       return () => data;
@@ -93,10 +111,16 @@ const AppContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getAllProducts();
+    getAllUserFunction();
     getAllOrders();
     getAllUserFunction();
   }, []);
+
+  // Add to Cart
+
+  const addToCart = (id) => {};
+
+  // console.log(getAllProduct, allOrders, getAllUser);
 
   return (
     <AppContext.Provider
@@ -104,7 +128,6 @@ const AppContextProvider = ({ children }) => {
         isLoding,
         setIsLoading,
         allOrders,
-        setAllOrders,
         getAllProduct,
         getAllUser,
       }}

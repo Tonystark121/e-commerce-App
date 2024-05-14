@@ -8,8 +8,6 @@ const ProductDetail = () => {
   const { getAllProduct, isLoading, setIsLoading } =
     useContext(AppContext);
 
-    console.log(getAllProduct)
-
   return (
     <div>
       <div className="py-5 flex justify-between items-center">

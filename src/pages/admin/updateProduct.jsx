@@ -14,6 +14,9 @@ const categoryList = [
     name: "shirt",
   },
   {
+    name: "food",
+  },
+  {
     name: "jacket",
   },
   {
@@ -60,14 +63,13 @@ const UpdateProductPage = () => {
   const getSingleProductFunction = async () => {
     setIsLoading(true);
     try {
-      const productTemp = await getDoc(doc(fireDB, "products", id));
-      //   console.log(product.data())
+      const productTemp = await getDoc(doc(db, "products", id));
       const product = productTemp.data();
       setProduct({
         ...product,
-        title: product?.title,
+        name: product?.name,
         price: product?.price,
-        productImageUrl: product?.productImageUrl,
+        image: product?.image,
         category: product?.category,
         description: product?.description,
         quantity: product?.quantity,
@@ -84,9 +86,9 @@ const UpdateProductPage = () => {
   const updateProduct = async () => {
     setIsLoading(true);
     try {
-      await setDoc(doc(fireDB, "products", id), product);
+      await setDoc(doc(db, "products", id), product);
       toast.success("Product Updated successfully");
-      getAllProducts();
+      await getAllProducts();
       setIsLoading(false);
       navigate("/admin-dashboard");
     } catch (error) {
@@ -98,6 +100,8 @@ const UpdateProductPage = () => {
   useEffect(() => {
     getSingleProductFunction();
   }, []);
+
+  console.log(product)
   return (
     <div>
       <div className="flex justify-center items-center h-screen">
@@ -115,12 +119,12 @@ const UpdateProductPage = () => {
           <div className="mb-3">
             <input
               type="text"
-              name="title"
-              value={product.title}
+              name="Name"
+              value={product.name}
               onChange={(e) => {
                 setProduct({
                   ...product,
-                  title: e.target.value,
+                  name: e.target.value,
                 });
               }}
               placeholder="Product Title"
@@ -150,11 +154,11 @@ const UpdateProductPage = () => {
             <input
               type="text"
               name="productImageUrl"
-              value={product.productImageUrl}
+              value={product.image}
               onChange={(e) => {
                 setProduct({
                   ...product,
-                  productImageUrl: e.target.value,
+                  image: e.target.value,
                 });
               }}
               placeholder="Product Image Url"

@@ -64,9 +64,10 @@ const nav = () => {
         )}
 
         {/* Cart */}
-        <li>
+        {user?.role === 'user' &&
+          <li>
           <Link to={"/cart"}>Cart(0)</Link>
-        </li>
+        </li>}
       </ul>
     );
   };

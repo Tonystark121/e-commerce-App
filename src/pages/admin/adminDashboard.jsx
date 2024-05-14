@@ -2,20 +2,14 @@ import React, { useContext, useEffect } from "react";
 import Layout from "../../components/layout.jsx/layout";
 import ProductDetail from "../../components/admin/productDetail";
 import OrderDetail from "../../components/admin/productDetail";
-// import ProductDetail from "../../components/admin/productDetail";
+import UserDetail from "../../components/admin/userDetails";
 import AppContext from "antd/es/app/context";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 const AdminDashboard = () => {
   const user = JSON.parse(localStorage.getItem("users"));
 
-  const {
-    allOrders,
-    getAllProduct,
-    getAllUser,
-    getAllProducts,
-    getAllOrders,
-    getAllUserFunction,
-  } = useContext(AppContext);
+  const { allOrders, getAllProduct, getAllUser } = useContext(AppContext);
+  // console.log(getAllUser)
 
   return (
     <Layout>
@@ -142,9 +136,9 @@ const AdminDashboard = () => {
                     </svg>
                   </div>
                   <h2 className="title-font font-medium text-3xl text-pink-400 fonts1">
-                    10
+                  {getAllUser?.length ? getAllUser?.length : 10}
                   </h2>
-                  <p className=" text-pink-500  font-bold">Total Order</p>
+                  <p className=" text-pink-500  font-bold">Total Users</p>
                 </div>
               </Tab>
             </TabList>
@@ -152,10 +146,11 @@ const AdminDashboard = () => {
               <ProductDetail />
             </TabPanel>
             <TabPanel>
-              {/* <ProductDetail /> */}
-              Rajeev
+              <OrderDetail />
             </TabPanel>
-            <TabPanel>Rohit</TabPanel>
+            <TabPanel>
+              <UserDetail />
+            </TabPanel>
           </Tabs>
         </div>
       </div>
