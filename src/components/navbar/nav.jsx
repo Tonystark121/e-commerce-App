@@ -14,8 +14,8 @@ const nav = () => {
       navigate("/login");
     };
 
-    const {items} = useSelector(state => state.cartReducer)
-    
+    const { items } = useSelector((state) => state.cartReducer);
+
     return (
       <ul className="flex space-x-3 text-white font-medium text-md px-5 ">
         {/* Home */}
@@ -68,10 +68,11 @@ const nav = () => {
         )}
 
         {/* Cart */}
-        {user?.role === 'user' &&
+        {user?.role === "user" && (
           <li>
-          <Link to={"/cart"}>Cart({items.length})</Link>
-        </li>}
+            <Link to={"/cart"}>Cart({items.length})</Link>
+          </li>
+        )}
       </ul>
     );
   };

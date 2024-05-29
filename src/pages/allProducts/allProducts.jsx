@@ -93,7 +93,6 @@ import { AppContext } from "../../context/context.jsx";
 
 const AllProduct = () => {
   const { isLoading, getAllProduct } = useContext(AppContext);
-  const user = JSON.parse(localStorage.getItem('users'))
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -152,7 +151,7 @@ const AllProduct = () => {
                         </h1>
 
                         <div className="flex justify-center ">
-                          {value.items?.some((p) => p.id === item.id) ? (
+                          {value?.items?.some((p) => p.id === item.id) ? (
                             <button
                               onClick={() => deleteCart(item)}
                               className=" bg-red-700 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold"

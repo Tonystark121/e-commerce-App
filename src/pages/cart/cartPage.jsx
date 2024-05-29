@@ -63,6 +63,8 @@ const CartPage = () => {
 
   const { userId } = JSON.parse(localStorage.getItem("users"));
 
+  console.log(discountAmount)
+
   useEffect(() => {
     if (items.length === 0) dispatch(getCartItems(userId));
   }, []);

@@ -15,6 +15,8 @@ import AdminOnlyRoutes from "./protectedRoutes/adminOnlyRoutes";
 import UserOnlyRoutes from "./protectedRoutes/userOnlyRoutes";
 import AddProductPage from "./pages/admin/addProduct";
 import UpdateProductPage from "./pages/admin/updateProduct";
+import { getCartItems } from "./redux/cartSlice.js";
+import { useDispatch } from "react-redux";
 
 function App() {
   const ScrollToTop = () => {
@@ -26,6 +28,12 @@ function App() {
     }, [pathname]);
     return null;
   };
+  const dispatch = useDispatch()
+  const user = JSON.parse(localStorage.getItem('users'))
+  useEffect(()=>{
+    console.log('dispatching get getItems function')
+    dispatch(getCartItems({userId:user.userId}));
+ },[])
 
   return (
     <BrowserRouter>

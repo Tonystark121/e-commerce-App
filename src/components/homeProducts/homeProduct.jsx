@@ -1,5 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AppContext } from "../../context/context";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemsToCart, deleteFromCart } from "../../redux/cartSlice";
 
 // productData
 const productData = [
@@ -86,9 +89,17 @@ const productData = [
 ];
 
 const HomePageProductCard = () => {
-  const { getAllProduct, category } = useContext(AppContext);
+  const { getAllProduct, category, isLoading } = useContext(AppContext);
 
-  const addToCart = (id) => {}
+  const user = JSON.parse(localStorage.getItem('users'))
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const addCart = (item) => {
+    dispatch(addItemsToCart({item, userId:user.userId}));
+    toast.success("Item added to Cart Successfully");
+  };
 
   return (
     <div className="mt-10">
@@ -126,7 +137,7 @@ const HomePageProductCard = () => {
                         </h1>
 
                         <div className="flex justify-center ">
-                          <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold" onClick={() =>addToCart(item.id)}>
+                          <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold" onClick={() =>addCart(item.id)}>
                             Add To Cart
                           </button>
                         </div>
@@ -167,7 +178,7 @@ const HomePageProductCard = () => {
                               </h1>
 
                               <div className="flex justify-center ">
-                                <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold" onClick={()=>addToCart(item.id)}>
+                                <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold" onClick={()=>addCart(item.id)}>
                                   Add To Cart
                                 </button>
                               </div>

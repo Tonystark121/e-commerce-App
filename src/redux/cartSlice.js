@@ -9,6 +9,9 @@ import {
   orderBy,
   getDocs,
   deleteDoc,
+  doc,
+  setDoc,
+  Query,
 } from "firebase/firestore";
 
 const storedItems = localStorage?.getItem("cart");
@@ -41,42 +44,54 @@ export const addItemsToCart = createAsyncThunk(
       size: `${Math.floor(Math.random() * 100)}cm`,
     };
     try {
-      const cartRef = collection(db, `user/${userId}/cart`);
-      const queryRef = query(cartRef, where("id", "==", newItem.id));
-      const snapshot = await getDocs(queryRef);
-      if (!snapshot.empty) {
-        console.log("Item already exists in the cart.");
-        return null;
-      }
-      const docRef = await addDoc(cartRef, newItem);
-      console.log(docRef);
-      return { docId: docRef.id, ...newItem };
+        // creating reference.
+        const cartRef = collection(db, `user/${userId}/cart`)
+
+        // checking if aleardy present
+        const productRef = query(cartRef, where("id","==",newItem?.id))
+        const queryResult = await getDocs(productRef)
+        console.log('productRef', productRef)
+        console.log('queryResult', queryResult)
+
+
+        if(!queryResult.empty){
+          console.log('Item is already present in cart!')
+          return
+        }
+
+        // ## importtant discussion goes here
+
+        // // creating document and getting its reference.
+        // const docRef = await addDoc(cartRef, newItem)
+        // // againg adding its document id.
+        // const result = await setDoc(docRef, {...newItem, docId:docRef.id})
+        // console.log('Document added successful.')
+
+        const docRef = doc(cartRef, newItem.id)
+        await setDoc(docRef, {...newItem})
+        return newItem;
     } catch (error) {
-      console.log(error, "something went wrong!");
-      throw error;
+       console.log('Something went wrong')
     }
   }
 );
 
 export const getCartItems = createAsyncThunk(
   "cart/getCartItems",
-  async (userId) => {
-    try {
-      const cartRef = query(
-        collection(db, `user/${userId}/cart`),
-        orderBy("time")
-      );
-      const snapshot = await getDocs(cartRef);
-      console.log(snapshot.size);
-      let allItems = [];
-      snapshot.forEach((doc) => {
-        allItems.push({ ...doc.data(), docId: doc.id });
-      });
-      return allItems;
-    } catch (error) {
-      console.log(error, "something went wrong");
-      throw error;
-    }
+  async ({userId}) => {
+     try {
+        const cartRef = collection(db, `user/${userId}/cart`)
+        const snapshot = await getDocs(cartRef)
+        console.log(snapshot)
+        const products = []
+        snapshot.forEach(doc => {
+          products.push(doc.data());
+        })
+        // console.log(products)
+        return products
+     } catch (error) {
+       console.log('Something went wrong.')
+     }
   }
 );
 
