@@ -88,6 +88,8 @@ const productData = [
 const HomePageProductCard = () => {
   const { getAllProduct, category } = useContext(AppContext);
 
+  const addToCart = (id) => {}
+
   return (
     <div className="mt-10">
       {/* Heading  */}
@@ -124,7 +126,7 @@ const HomePageProductCard = () => {
                         </h1>
 
                         <div className="flex justify-center ">
-                          <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold">
+                          <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold" onClick={() =>addToCart(item.id)}>
                             Add To Cart
                           </button>
                         </div>
@@ -165,7 +167,7 @@ const HomePageProductCard = () => {
                               </h1>
 
                               <div className="flex justify-center ">
-                                <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold">
+                                <button className=" bg-pink-500 hover:bg-pink-700 w-full text-white py-[4px] rounded-lg font-bold" onClick={()=>addToCart(item.id)}>
                                   Add To Cart
                                 </button>
                               </div>

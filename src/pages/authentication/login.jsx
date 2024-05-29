@@ -34,7 +34,7 @@ const Login = () => {
             const data = onSnapshot(q, (querySnapShot) => {
               let user;
               querySnapShot.forEach((doc) => {
-                user = doc.data();
+                user = {...doc.data(), userId : doc.id};
               });
               localStorage.setItem("users", JSON.stringify(user));
               setUserData({

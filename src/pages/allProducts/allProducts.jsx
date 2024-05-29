@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Layout from "../../components/layout.jsx/layout";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, deleteFromCart } from "../../redux/cartSlice.js";
+import { deleteFromCart, addItemsToCart } from "../../redux/cartSlice.js";
 import { toast } from "react-hot-toast";
 import Loader from "../../components/loader/loader.jsx";
 import { AppContext } from "../../context/context.jsx";
@@ -93,12 +93,13 @@ import { AppContext } from "../../context/context.jsx";
 
 const AllProduct = () => {
   const { isLoading, getAllProduct } = useContext(AppContext);
+  const user = JSON.parse(localStorage.getItem('users'))
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const addCart = (item) => {
-    dispatch(addToCart(item));
+    dispatch(addItemsToCart({item, userId:user.userId}));
     toast.success("Item added to Cart Successfully");
   };
 
